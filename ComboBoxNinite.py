@@ -63,6 +63,8 @@ for image in images:
     name, mission, tpack = parse_filename(os.path.basename(image))
     image_data.append({"name": name, "mission": mission, "tpack": tpack, "path": image})
 
+image_data = sorted(image_data, key=lambda x: natural_keys(x["mission"]))
+
 names = set()
 missions = set()
 tpacks = set()
@@ -72,9 +74,6 @@ for data in image_data:
     missions.add(data["mission"])
     tpacks.add(data["tpack"])
 
-image_data = sorted(image_data, key=lambda x: natural_keys(x["mission"]))
-
-print(image_data)
 
 root = tk.Tk()
 root.title("Image Filter")
