@@ -3,6 +3,15 @@ from tkinter import ttk
 # from PIL import Image, ImageTk
 from functools import partial
 import os
+import re
+
+
+def atoi(text):
+    return int(text) if text.isdigit() else text
+
+
+def natural_keys(text):
+    return [atoi(c) for c in re.split(r'(\d+)', text)]
 
 
 def get_images(folder_path):
@@ -63,6 +72,10 @@ for data in image_data:
     missions.add(data["mission"])
     tpacks.add(data["tpack"])
 
+image_data = sorted(image_data, key=lambda x: natural_keys(x["mission"]))
+
+print(image_data)
+
 root = tk.Tk()
 root.title("Image Filter")
 
@@ -71,7 +84,7 @@ names = list(names)
 names.sort()
 missions = list(missions)
 # missions.insert(0, "")
-missions.sort()
+missions.sort(key=natural_keys)
 tpacks = list(tpacks)
 # tpacks.insert(0, "")
 tpacks.sort()
